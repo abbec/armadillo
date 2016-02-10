@@ -15,6 +15,7 @@ set(VERSION_MINOR 1)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 #configure_file(src/config.h.in ${CMAKE_BINARY_DIR}/config.h)
+#configure_file(script/run.sh.in ${CMAKE_BINARY_DIR}/run.sh)
 
 include_directories(${CMAKE_BINARY_DIR} "kernel/")
 
