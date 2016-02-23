@@ -19,7 +19,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 include_directories(${CMAKE_BINARY_DIR} "kernel/include")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -std=gnu99 -g -ffreestanding -O0 -Wall -target arm-none-eabi")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -std=gnu99 -ffreestanding -Wall -target arm-none-eabi")
 
 set(CMAKE_EXE_LINKER_FLAGS "-T ${PROJECT_SOURCE_DIR}/script/link.ld -ffreestanding -nostdlib")
 

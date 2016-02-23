@@ -12,13 +12,13 @@
 _start:
 	// Setup the stack.
 	ldr sp, =load_stack_start
-
 	mov fp, #0
 
 	// Call pre init
 	bl pre_init
 
 	// Kernel is mapped high
+	// TODO: setup stack
 	ldr r3, =kmain
 	blx r3
 

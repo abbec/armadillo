@@ -1,8 +1,13 @@
 #include <stdint.h>
-#include <print_serial.h>
+#include <print.h>
+#include <vm.h>
+
+extern char __kern_virt_base;
+
 
 void kmain()
 {
-	print_serial("Hello Armadillo! Booting...\n");
+	vaddr_t kernel_base = (vaddr_t) &__kern_virt_base;
+	kprintf("Hello Armadillo at 0x%x! Booting...\n", kernel_base);
 }
 

@@ -1,3 +1,3 @@
 #pragma once
 
-void print_serial(const char *s);
+void serial_putc(char c);
