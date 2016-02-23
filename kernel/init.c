@@ -3,10 +3,13 @@
 
 extern char __unpaged_start;
 extern char __kern_size;
+extern char __end;
+extern char _edata;
+extern char __kern_size;
 static paddr_t kernel_start = (paddr_t) &__unpaged_start;
 static paddr_t kernel_size = (paddr_t) &__kern_size;
 
-/* Reserve space for a page directory. Must be 16k aligned. */
+// Reserve space for a page directory. Must be 16k aligned.
 pde_t __attribute__((aligned(16384))) page_directory[VM_ENTRIES];
 
 void set_pd(pde_t *pd)
@@ -70,6 +73,9 @@ vaddr_t map_kernel(pde_t *pd)
 
 void pre_init()
 {
+	//TODO: clear bss
+	//memset(&_edata, 0, (uint32_t)&__end - (uint32_t)&_edata);
+
 	// this code needs to stay where it is
 	setup_one_to_one_mappings(page_directory);
 
