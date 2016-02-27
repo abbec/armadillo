@@ -8,29 +8,33 @@ __kern_offset = (__kern_virt_base - __kern_phys_base);
 SECTIONS
 {
 	. = __kern_phys_base;
-	__unpaged_start = .;
+	__bootstrap_start = .;
 	__start = .;
-	.unpaged_text : { *(.bootkernel) *init.c.obj(.text) }
+	.bootstrap_text : { *(.bootkernel) *init.c.obj(.text) }
+	__bootstrap_end_text = .;
 
-	.unpaged_data ALIGN(4096) : { *init.c.obj(.data .rodata*) *boot.s.obj(.data .rodata*) }
-	.unpaged_bss ALIGN(4096) : { *init.c.obj(.bss COMMON) *boot.s.obj(.bss COMMON) }
+	.bootstrap_data ALIGN(4096) : { *init.c.obj(.data .rodata*) *boot.s.obj(.data .rodata*) }
+	__bootstrap_end_data = .;
+
+	.bootstrap_bss ALIGN(4096) : { *init.c.obj(.bss COMMON) *boot.s.obj(.bss COMMON) }
+	__bootstrap_end = .;
 
 	. += __kern_offset;
+	. = ALIGN(4096);
 
-	. = ALIGN(4096); usermapped_start = .;
-	.usermapped_glo : AT(ADDR(.usermapped_glo) - __kern_offset) { *(.usermapped_glo) }
-	. = ALIGN(4096); usermapped_nonglo_start = .;
-	.usermapped : AT(ADDR(.usermapped) - __kern_offset) { *(.usermapped) }
-	. = ALIGN(4096); usermapped_end = .;
-	.text             : AT(ADDR(.text) - __kern_offset) { *(.text*) }
-	_etext = .;
+	.text : AT(ADDR(.text) - __kern_offset) { *(.text*) }
+	__end_text = .;
+	__unpaged_end_text = . - __kern_offset;
+
 	.data ALIGN(4096) : AT(ADDR(.data) - __kern_offset) { *(.data .rodata* ) }
 	. = ALIGN(4096);
-	_edata = .;
-	__k_unpaged__edata = . - __kern_offset;
-	.bss ALIGN(4096)  : AT(ADDR(.bss) - __kern_offset) { *(.bss* COMMON)
-		__k_unpaged__kern_size = . - __kern_virt_base;
-		__kern_size = __k_unpaged__kern_size;
+	__end_data = .;
+	__unpaged_end_data = . - __kern_offset;
+
+	.bss ALIGN(4096) : AT(ADDR(.bss) - __kern_offset) {
+		*(.bss* COMMON)
+		__unpaged_kern_size = . - __kern_virt_base;
+		__kern_size = __unpaged_kern_size;
 
 		. += 4096;
 	}
