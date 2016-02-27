@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <vm.h>
+#include <memory.h>
 
 extern char __kern_phys_base;
 extern char __kern_virt_base;
@@ -16,18 +17,6 @@ extern char __unpaged_end;
 
 // Reserve space for a page directory. Must be 16k aligned.
 pde_t __attribute__((aligned(16384))) page_directory[VM_ENTRIES];
-
-void *memset(void *ptr, uint8_t value, uint32_t num)
-{
-	uint8_t * p = ptr;
-	for (uint32_t i = 0; i < num; ++i)
-	{
-		*p = value;
-		++p;
-	}
-
-	return ptr;
-}
 
 void set_pd(pde_t *pd)
 {
