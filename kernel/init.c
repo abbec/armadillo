@@ -17,7 +17,7 @@ extern char __unpaged_end;
 // Reserve space for a page directory. Must be 16k aligned.
 pde_t __attribute__((aligned(16384))) page_directory[VM_ENTRIES];
 
-void *memset(void *ptr, uint8_t value, uint32_t num)
+void *memset_unpaged(void *ptr, uint8_t value, uint32_t num)
 {
 	uint8_t * p = ptr;
 	for (uint32_t i = 0; i < num; ++i)
@@ -94,11 +94,11 @@ void pre_init()
 	// and future kernel one).
 	// Need to use physical addresses (unpaged)
 	// here since the MMU is not set up yet
-	memset(&__unpaged_end_data, 0,
+	memset_unpaged(&__unpaged_end_data, 0,
 			(uint32_t)&__unpaged_end -
 			(uint32_t)&__unpaged_end_data);
 
-	memset(&__bootstrap_end_data, 0,
+	memset_unpaged(&__bootstrap_end_data, 0,
 			(uint32_t)&__bootstrap_end -
 			(uint32_t)&__bootstrap_end_data);
 
