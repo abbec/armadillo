@@ -18,7 +18,10 @@ _start:
 	bl pre_init
 
 	// Kernel is mapped high
-	// TODO: setup stack
+	ldr sp, =stacktop
+	mov r1, #0
+	push {r1}
+
 	ldr r3, =kmain
 	blx r3
 
@@ -31,3 +34,4 @@ halt:
 load_stack:
 	.space 4096
 load_stack_start:
+
