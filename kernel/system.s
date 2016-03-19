@@ -1,4 +1,8 @@
 
+.globl dummy
+dummy:
+    bx lr
+
 .globl stacktop
 
 .data

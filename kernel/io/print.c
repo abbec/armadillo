@@ -1,7 +1,12 @@
-#include <print_serial.h>
+#include <serial.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
+
+void print_init()
+{
+	serial_init();
+}
 
 void putc(char c)
 {
@@ -26,7 +31,7 @@ void uitoa(uint32_t num, uint32_t base, bool uc, char * bf)
 	while (a >= base) {
 		d *= base;
 		a = num/d;
-	}	
+	}
 
 	while (d != 0) {
 		uint32_t dgt = num / d;
